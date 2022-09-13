@@ -11,9 +11,7 @@ bool userAnswer = UserAnswer();
 
 CreateNewUser(userAnswer, firstName, lastName, myAge, userEmail, userAnswer);
 
-
-
-
+// User Choice //
 static void UserChoice(string input, RunnerCreation newUser)
 {
     switch (input)
@@ -25,17 +23,18 @@ static void UserChoice(string input, RunnerCreation newUser)
                 Console.Write("How many miles did you run today? ");
                 double milesRun = Convert.ToDouble(Console.ReadLine());
                 newUser.setMilesRun(milesRun + newUser.getMilesRun());
-                Console.Write("Nice Job! Keep working hard");
+                Console.WriteLine("----------------------------------------------");
+                Console.WriteLine("Nice Job! Keep working hard");
                 Console.ReadLine();
-                PrintOptions(newUser); 
+                PrintOptions(newUser);
                 break;
             }
-            catch(Exception e )
+            catch (Exception e)
             {
                 Console.Write("Please enter a number and try again! ");
                 Console.ReadLine();
-                UserChoice(input, newUser); 
-                break; 
+                UserChoice(input, newUser);
+                break;
             }
         case "2":
             Console.Clear();
@@ -43,13 +42,38 @@ static void UserChoice(string input, RunnerCreation newUser)
             Console.WriteLine("----------------------------------------------");
             Console.WriteLine($"You have run {newUser.getMilesRun()} miles so far this week!");
             Console.WriteLine("----------------------------------------------");
-            Console.Write($"You have BLANK miles left to run to met your goal!"); 
+            Console.Write($"You have {newUser.getWeeklyGoal() - newUser.getMilesRun()} miles left to run to met your goal!");
             Console.ReadLine();
-            PrintOptions(newUser); 
-            break; 
+            PrintOptions(newUser);
+            break;
+        case "3":
+            try
+            {
+                Console.Clear();
+                Console.WriteLine($"Your Current Weekly Goal is {newUser.getWeeklyGoal()}");
+                Console.WriteLine("----------------------------------------------");
+                Console.Write("How many miles are you going to run this week? ");
+                double mileGoals = Convert.ToDouble(Console.ReadLine());
+                newUser.setWeeklyGoal(mileGoals);
+                Console.WriteLine("----------------------------------------------");
+                Console.WriteLine("Wow! Thats a lot of miles");
+                Console.ReadLine();
+                PrintOptions(newUser);
+                break;
+            }
+            catch
+            {
+                Console.Write("Please enter a number and try again! ");
+                Console.ReadLine();
+                UserChoice(input, newUser);
+                break;
+            }
+
 
     }
 }
+
+// Print Options // 
 static void PrintOptions(RunnerCreation newUser)
 {
     Console.Clear();
@@ -69,7 +93,7 @@ static void PrintOptions(RunnerCreation newUser)
 
 }
 
-
+// Creating a new instace of a user //
 static void CreateNewUser(bool userInput, string firstName, string lastName, int myAge, string userEmail, bool userAnswer)
 {
     if (userInput == true)
@@ -88,6 +112,7 @@ static void CreateNewUser(bool userInput, string firstName, string lastName, int
         CloseTheProgram();
     }
 }
+
 // Getting The User Input Code Below // 
 static bool UserAnswer()
 {
