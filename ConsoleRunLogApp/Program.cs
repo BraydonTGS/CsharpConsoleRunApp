@@ -25,7 +25,7 @@ static void UserChoice(string input, RunnerCreation newUser)
                 Console.Write("How many miles did you run today? ");
                 double milesRun = Convert.ToDouble(Console.ReadLine());
                 newUser.setMilesRun(milesRun + newUser.getMilesRun());
-                Console.WriteLine("Nice Job! Keep working hard");
+                Console.Write("Nice Job! Keep working hard");
                 Console.ReadLine();
                 PrintOptions(newUser); 
                 break;
