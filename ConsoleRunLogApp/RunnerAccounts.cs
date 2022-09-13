@@ -5,6 +5,7 @@ namespace ConsoleRunLogApp
     {
         public RunnerAccounts()
         {
+    
         }
     }
 }

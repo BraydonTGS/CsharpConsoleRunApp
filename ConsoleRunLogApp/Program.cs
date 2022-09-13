@@ -1,6 +1,7 @@
 ﻿using ConsoleRunLogApp;
 
 Greeting();
+RunnerAccounts runners = new RunnerAccounts();
 
 string firstName = FirstName();
 string lastName = LastName();
@@ -11,11 +12,47 @@ bool userAnswer = UserAnswer();
 CreateNewUser(userAnswer, firstName, lastName, myAge, userEmail, userAnswer);
 
 
-static void NextSteps()
+
+
+static void UserChoice(string input, RunnerCreation newUser)
 {
-    Console.Clear(); 
-    Console.WriteLine("Okay so what would you like to do now? ");
-    Console.WriteLine("----------------------------------------------");
+    switch (input)
+    {
+        case "1":
+            Console.Clear();
+            try
+            {
+                Console.Write("How many miles did you run today? ");
+                double milesRun = Convert.ToDouble(Console.ReadLine());
+                newUser.setMilesRun(milesRun + newUser.getMilesRun());
+                Console.WriteLine("Nice Job! Keep working hard");
+                Console.ReadLine();
+                PrintOptions(newUser); 
+                break;
+            }
+            catch(Exception e )
+            {
+                Console.Write("Please enter a number and try again! ");
+                Console.ReadLine();
+                UserChoice(input, newUser); 
+                break; 
+            }
+        case "2":
+            Console.Clear();
+            Console.WriteLine($"Your running goal for this week is {newUser.getWeeklyGoal()} miles!");
+            Console.WriteLine("----------------------------------------------");
+            Console.WriteLine($"You have run {newUser.getMilesRun()} miles so far this week!");
+            Console.WriteLine("----------------------------------------------");
+            Console.Write($"You have BLANK miles left to run to met your goal!"); 
+            Console.ReadLine();
+            PrintOptions(newUser); 
+            break; 
+
+    }
+}
+static void PrintOptions(RunnerCreation newUser)
+{
+    Console.Clear();
     Console.WriteLine("Select operation: ");
     Console.WriteLine("----------------------------------------------");
     Console.WriteLine("1. Add a New Run");
@@ -27,13 +64,13 @@ static void NextSteps()
     Console.WriteLine("4. Exit");
     Console.WriteLine();
     Console.Write("Please Enter your Seleciton: ");
-    var userInput = Console.ReadLine();
- 
+    string userInput = Console.ReadLine();
+    UserChoice(userInput, newUser);
 
 }
 
 
-static void CreateNewUser(bool userInput, string firstName,string lastName, int myAge, string userEmail, bool userAnswer)
+static void CreateNewUser(bool userInput, string firstName, string lastName, int myAge, string userEmail, bool userAnswer)
 {
     if (userInput == true)
     {
@@ -44,14 +81,14 @@ static void CreateNewUser(bool userInput, string firstName,string lastName, int 
         Console.WriteLine("----------------------------------------------");
         Thread.Sleep(2500);
         RunnerCreation newUser = new RunnerCreation(firstName, lastName, myAge, userEmail, userPassword);
-        NextSteps();
+        PrintOptions(newUser);
     }
     else
     {
         CloseTheProgram();
     }
 }
-
+// Getting The User Input Code Below // 
 static bool UserAnswer()
 {
     Console.Write("Would you like to create a new Account (Y/N)? ");
@@ -97,7 +134,6 @@ static int MyAge()
         return MyAge();
     }
 }
-
 
 static string LastName()
 {
